@@ -1,0 +1,57 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Mirror;
+
+public class JugglerCharacterSwitch : NetworkBehaviour
+{
+    public GameObject StrongGuy;
+    public GameObject StrongGuyFollow;
+    public GameObject Juggler;
+    public GameObject MainCamera;
+    public GameObject StrongGuyLock;
+    public GameObject JugglerLock;
+    public GameObject CharacterSwitch;
+    public KeyCode StrongGuySwitch = KeyCode.Alpha2;
+    KeyCode SwitchOpener = KeyCode.Q;
+
+    void Awake()
+    {
+       
+    }
+
+    void Update()
+    {
+        KeyCode SwitchOpener = KeyCode.Q;
+        if (Input.GetKeyDown(SwitchOpener))
+        {
+            CharacterSwitch.SetActive(true);
+        }
+        if (Input.GetKeyUp(SwitchOpener))
+        {
+            CharacterSwitch.SetActive(false);
+        }
+        if (Juggler.GetComponent<BasicBehaviour>().enabled == true && Juggler.GetComponent<MoveBehaviour>().enabled == true && Input.GetKey(StrongGuySwitch) && StrongGuy.GetComponent<BasicBehaviour>().enabled == false && StrongGuy.GetComponent<MoveBehaviour>().enabled == false)
+        {
+            JugglerToStrongGuy();
+        }
+        if (Juggler.GetComponent<MoveBehaviour>().enabled == true)
+        {
+            JugglerLock.SetActive(true);
+            
+        }
+        else
+        {
+            JugglerLock.SetActive(false);
+        }
+    }
+
+    void JugglerToStrongGuy()
+    {
+        Juggler.GetComponent<BasicBehaviour>().enabled = false;
+        Juggler.GetComponent<MoveBehaviour>().enabled = false;
+        StrongGuy.GetComponent<BasicBehaviour>().enabled = true;
+        StrongGuy.GetComponent<MoveBehaviour>().enabled = true;
+        MainCamera.GetComponent<JugglerCameraFollow>().CameraFollowObject = StrongGuyFollow;
+    }
+}
