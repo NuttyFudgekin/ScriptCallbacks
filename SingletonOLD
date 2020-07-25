@@ -1,0 +1,96 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Mirror;
+
+
+// public enum CharacterClasses { JUGGLER, STRONGMAN } //Type all your classes here
+// [System.Serializable] public class SyncDictionaryCharacterClassesBool : SyncDictionary<CharacterClasses, bool> { }
+
+public class GamePropertiesManager : NetworkBehaviour
+{
+
+
+    private static GamePropertiesManager _instance;
+
+    public static GamePropertiesManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = GameObject.FindObjectOfType<GamePropertiesManager>();
+            }
+
+            return _instance;
+        }
+    }
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+
+    }
+
+    [SyncVar] public bool isJuggler;
+    [SyncVar] public bool isStrongGuy;
+    //    public GameObject[] Characters; //Add all your classes GO in the inspector
+    //    public SyncDictionaryCharacterClassesBool CharacterSync = new SyncDictionaryCharacterClassesBool();
+
+}
+
+public class Character
+{
+
+//    [SyncVar(hook = nameof(OnCharacterClassUpdated))] CharacterClasses characterClass;
+
+//    void OnCharacterClassUpdated(CharacterClasses oldCharacterClass, CharacterClasses newCharacterClass)
+//    {
+//        //Change your character GO using GamePropertiesManager.Instance.Characters[(int)newCharacterClass]
+//        //To use it CharacterClasses and Characters must be in the same order
+//        GamePropertiesManager.Instance.Characters[(int)newCharacterClass] = GamePropertiesManager.Instance.Characters[(int)oldCharacterClass];
+//        Debug.Log("This Works!");
+//    }
+
+//    //U can only set SyncVariables from the server
+//    [Command]
+//    void CmdSetCharacterClass(CharacterClasses _characterClass)
+//    {
+//        if (GamePropertiesManager.Instance.CharacterSync.ContainsKey(characterClass))
+//            GamePropertiesManager.Instance.CharacterSync[_characterClass] = false;
+
+//        characterClass = _characterClass;
+
+//        if (!GamePropertiesManager.Instance.CharacterSync.ContainsKey(_characterClass))
+//            GamePropertiesManager.Instance.CharacterSync.Add(_characterClass, true);
+
+//        else GamePropertiesManager.Instance.CharacterSync[_characterClass] = true;
+//    }
+
+//    void Update()
+//    {
+//        Debug.Log("Updated");
+
+//        if (Input.GetKey(KeyCode.Alpha1))
+//            if (!ClassAlreadyInUse(CharacterClasses.JUGGLER))
+//            {
+//                CmdSetCharacterClass(CharacterClasses.JUGGLER);
+//                Debug.Log("Juggler in use");
+//            }
+
+//        if (Input.GetKey(KeyCode.Alpha2))
+//            if (!ClassAlreadyInUse(CharacterClasses.STRONGMAN))
+//            {
+//                CmdSetCharacterClass(CharacterClasses.STRONGMAN);
+//                Debug.Log("StrongMan in use");
+//            }
+//    }
+
+//    private bool ClassAlreadyInUse(CharacterClasses _characterClass)
+//    {
+//        Debug.Log("Bool is working");
+//        if (!GamePropertiesManager.Instance.CharacterSync.ContainsKey(_characterClass)) return false;
+//        return GamePropertiesManager.Instance.CharacterSync[_characterClass];
+//    }
+
+}
