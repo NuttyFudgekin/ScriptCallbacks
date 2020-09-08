@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Mirror;
+
+namespace CircusGame
+{
+    public class NetworkManagerAddon : NetworkManager
+    {
+        [SerializeField]GameObject Juggler;
+        public MoveBehaviour JugglerMovement;
+        public BasicBehaviour JugglerBasic;
+        [SerializeField]NetworkBehaviorManger Juggler_available;
+
+        [SerializeField]GameObject StrongMan;
+        public MoveBehaviour StrongGuyMovement;
+        public BasicBehaviour StrongGuyBasic;
+        [SerializeField]NetworkBehaviorManger StrongMan_available;
+
+        
+        public override void OnServerDisconnect(NetworkConnection conn)
+        {
+            
+                Juggler.GetComponent<NetworkIdentity>().RemoveClientAuthority();
+                JugglerMovement.enabled = false;
+                JugglerBasic.enabled = false;
+            
+            
+                StrongMan.GetComponent<NetworkIdentity>().RemoveClientAuthority();
+                StrongGuyMovement.enabled = false;
+                StrongGuyBasic.enabled = false;
+            
+            base.OnServerDisconnect(conn);
+        }
+    }
+}
