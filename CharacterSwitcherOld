@@ -1,0 +1,37 @@
+            if (Input.GetKey(GamePropertiesManager.Instance.JugglerSwitch) && Juggler_available.available == true) // This switches to the Juggler
+            {
+                JugglerMovement.enabled = true;
+                JugglerBasic.enabled = true;
+                Juggler.GetComponent<Rigidbody>().isKinematic = false;
+                CameraScript.CameraFollowObject = JugglerFollow;
+
+                StrongGuyMovement.enabled = false;
+                StrongGuyBasic.enabled = false;
+
+                CharacterSwitchUI.SetActive(false);
+                Juggler_available.CmdGrantAuthority();
+                if (StrongMan_available.hasAuthority)
+                {
+                    StrongMan_available.CmdRemoveAuthority();
+                    StrongMan.GetComponent<Rigidbody>().isKinematic = true;
+                }
+            }
+
+            if (Input.GetKey(GamePropertiesManager.Instance.StrongGuySwitch) && StrongMan_available.available == true) // This switches to the Strong Man
+            {
+                StrongGuyMovement.enabled = true;
+                StrongGuyBasic.enabled = true;
+                StrongMan.GetComponent<Rigidbody>().isKinematic = false;
+                CameraScript.CameraFollowObject = StrongGuyFollow;
+
+                JugglerMovement.enabled = false;
+                JugglerBasic.enabled = false;
+
+                CharacterSwitchUI.SetActive(false);
+                StrongMan_available.CmdGrantAuthority();
+                if (Juggler_available.hasAuthority)
+                {
+                    Juggler_available.CmdRemoveAuthority();
+                    Juggler.GetComponent<Rigidbody>().isKinematic = true;
+                }
+            }
